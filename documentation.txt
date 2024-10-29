@@ -1,5 +1,5 @@
 base_url : "https://food-app-an69.onrender.com"
-Platform Deployed: Github / Heroku
+Platform Deployed: Github / onrender
 Database: Posgresql
 
 db schema
