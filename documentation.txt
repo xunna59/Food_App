@@ -1,0 +1,210 @@
+base_url : ""
+Platform Deployed: Github / Heroku
+Database: Posgresql
+
+db schema
+
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE orders (
+    id SERIAL PRIMARY KEY,
+    user_id INT REFERENCES users(id) ON DELETE CASCADE,
+    amount DECIMAL(10, 2) NOT NULL,
+    status VARCHAR(50) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+----------------------------------------------------------------
+API Endpoints
+
+
+
+
+Create User
+# Endpoint: {base_url}/users
+# Method: POST
+
+# Sample Request
+
+{
+    "name": "John Doe",
+    "email": "johndoe@example.com"
+}
+
+# Sample Response
+
+{
+    "success": true,
+    "message": "User created successfully",
+    "user": {
+        "id": 1,
+        "name": "John Doe",
+        "email": "johndoe@example.com",
+        "updatedAt": "2024-10-29T13:43:28.150Z",
+        "createdAt": "2024-10-29T13:43:28.150Z"
+    }
+}
+
+######################################################################
+
+Get All Users
+
+# Endpoint:{base_url}/users
+# Method: GET
+
+
+# Sample Response
+
+[
+      {
+        "id": 1,
+        "name": "John Doe",
+        "email": "johndoe@example.com",
+        "updatedAt": "2024-10-29T13:43:28.150Z",
+        "createdAt": "2024-10-29T13:43:28.150Z"
+    },
+    {
+         "id": 1,
+        "name": "Jane Doe",
+        "email": "janedoe@example.com",
+        "updatedAt": "2024-10-29T13:43:28.150Z",
+        "createdAt": "2024-10-29T13:43:28.150Z"
+    },
+]
+
+######################################################################
+
+Delete User by ID
+
+# Endpoint:{base_url}/users/:id
+# Method: DELETE
+
+
+# Sample Response
+
+{
+    "success": true,
+    "message": "User Deleted successfully"
+}
+
+######################################################################
+
+
+Create Order
+# Endpoint: {base_url}/orders
+# Method: POST
+
+# Sample Request
+
+{
+    "userId": 1,
+    "amount": 205.59,
+    "status": "processed"
+   
+}
+
+# Sample Response
+
+{
+    "success": true,
+    "message": "Order created successfully",
+    "user": {
+        "id": 1,
+    "userId": 1,
+    "amount": "205.59",
+    "status": "processed",
+    "updatedAt": "2024-10-29T13:56:57.680Z",
+    "createdAt": "2024-10-29T13:56:57.680Z"
+    }
+}
+
+######################################################################
+
+Get All Orders
+
+# Endpoint:{base_url}/orders
+# Method: GET
+
+
+# Sample Response
+
+[
+    {
+        "id": 1,
+        "userId": 1,
+        "amount": "205.59",
+        "status": "processed",
+        "createdAt": "2024-10-29T13:56:39.543Z",
+        "updatedAt": "2024-10-29T13:56:39.543Z"
+    },
+    {
+        "id": 2,
+        "userId": 1,
+        "amount": "205.59",
+        "status": "pending",
+        "createdAt": "2024-10-29T13:56:57.680Z",
+        "updatedAt": "2024-10-29T13:56:57.680Z"
+    }
+]
+
+######################################################################
+
+
+Cancel Order
+
+# Endpoint:{base_url}/orders/:id
+# Method: PATCH
+
+
+# Sample Response
+
+{
+    "success": true,
+    "message": "Order Canceled successfully",
+    "order": {
+        "id": 2,
+        "userId": 1,
+        "amount": "205.59",
+        "status": "canceled",
+        "createdAt": "2024-10-29T13:56:57.680Z",
+        "updatedAt": "2024-10-29T14:05:06.527Z"
+    }
+}
+
+######################################################################
+
+Delete Order by ID
+
+# Endpoint:{base_url}/orders/:id
+# Method: DELETE
+
+
+# Sample Response
+
+{
+    "success": true,
+    "message": "Order Deleted successfully"
+}
+
+######################################################################
+
+Get End of Day Report
+
+# Endpoint:{base_url}/orders/end-of-day-report
+# Method: GET
+
+
+# Sample Response
+
+[
+  {
+    "totalOrderAmount": "1131.77",
+    "totalOrders": "3"
+  }
+]
