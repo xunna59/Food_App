@@ -1,4 +1,4 @@
-base_url : ""
+base_url : "https://food-app-an69.onrender.com"
 Platform Deployed: Github / Heroku
 Database: Posgresql
 
